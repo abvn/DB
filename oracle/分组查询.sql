@@ -1,0 +1,16 @@
+-- 分组查询 GROUP BY
+
+-- 查询EMPLOYEES表中每个部门的平均薪资和每个部门多少人，按照部门分
+-- SELECT e.DEPARTMENT_ID AS "部门ID",ROUND(AVG(e.SALARY),2)  AS "平均年薪",COUNT(e.EMPLOYEE_ID) "部门人数",E.JOB_ID FROM EMPLOYEES e GROUP BY e.DEPARTMENT_ID,E.JOB_ID;
+-- 查询EMPLOYEES表中每个部门的平均薪资和每个部门多少人，按照岗位分
+-- SELECT ROUND(AVG(e.SALARY),2) AS "平均年薪",COUNT(*) "部门人数",e.JOB_ID "岗位" FROM EMPLOYEES e GROUP BY e.JOB_ID
+-- 查询EMPLOYEES表中每个部门的平均薪资和每个部门多少人，按照岗位分，输出薪资高于15000的人
+-- SELECT e.DEPARTMENT_ID AS "部门ID",ROUND(AVG(e.SALARY),2) AS "平均年薪",COUNT(*) "部门人数",e.JOB_ID "岗位",SUM(e.SALARY) "最高薪资" FROM EMPLOYEES e GROUP BY e.JOB_ID，e.DEPARTMENT_ID HAVING MAX(e.SALARY) > 15000
+
+-- 练习题2 PPT6
+-- 查询每个部门的部门编号，部门名称，部门人数，最高工资，最低工资，工资总和，平均工资。
+-- SELECT d.DEPARTMENT_ID "部门ID",d.DEPARTMENT_NAME "部门名称",COUNT(e.EMPLOYEE_ID) "部门人数",MAX(e.SALARY) "最高工资",MIN(e.SALARY) "最低工资",ROUND(AVG(e.SALARY),2) "平均工资" FROM EMPLOYEES e,DEPARTMENTS d WHERE e.DEPARTMENT_ID = d.DEPARTMENT_ID  GROUP BY d.DEPARTMENT_ID,d.DEPARTMENT_NAME
+-- 查询每个部门，每个岗位的部门编号，部门名称，岗位名称，部门人数，最高工资，最低工资，工资总和，平均工资
+-- SELECT d.DEPARTMENT_ID "部门ID",d.DEPARTMENT_NAME "部门名称",e.JOB_ID "岗位名称",COUNT(e.EMPLOYEE_ID) "部门人数",MAX(e.SALARY) "最高工资",MIN(e.SALARY) "最低工资",SUM(E.SALARY) "工资总和",ROUND(AVG(e.SALARY),2) "平均工资" FROM EMPLOYEES e,DEPARTMENTS d WHERE e.DEPARTMENT_ID = d.DEPARTMENT_ID  GROUP BY e.JOB_ID,d.DEPARTMENT_ID,d.DEPARTMENT_NAME
+-- 查询每个经理所管理的人数，经理编号，经理姓名，要求包括没有经理的人员信息
+-- SELECT COUNT(e.EMPLOYEE_ID) "管理的人数",m.MANAGER_ID "经理编号",m.FIRST_NAME "经理姓名"  FROM EMPLOYEES e,EMPLOYEES m WHERE e.MANAGER_ID = m.EMPLOYEE_ID GROUP BY m.MANAGER_ID,m.FIRST_NAME
